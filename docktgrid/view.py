@@ -11,9 +11,9 @@ __all__ = ["View", "VolumeView", "BasicView"]
 class View(metaclass=abc.ABCMeta):
     """Interface for defining voxel channels representations.
 
-    Note that the atoms in the boolean matrices should follow the order they appear in
-    the PDB file. The atoms from the protein are listed first, followed by those from
-    the ligand.
+    Note that the atoms in the returning boolean matrices should follow the order they
+    appear in the PDB file. The atoms from the protein are listed first, followed by
+    those from the ligand.
     """
 
     @abc.abstractmethod
@@ -69,7 +69,7 @@ class View(metaclass=abc.ABCMeta):
         """Set of channels considering ligand atoms only.
 
         Args:
-            molecular_complex (molecule.Complex): docktdeep Complex object.
+            molecular_complex (molecule.Complex): docktgrid Complex object.
 
         Returns:
             A boolean torch.Tensor array with shape

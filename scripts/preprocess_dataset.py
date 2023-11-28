@@ -4,8 +4,8 @@ This script loads the data files and stores them in serializable file formats, w
 be quickly loaded and used for training machine learning models.
 
 Usage examples:
-    * python -m docktgrid.scripts.preprocess_dataset --pattern '*.pdb' --dir tests/data/dataset
-    * python -m docktgrid.scripts.preprocess_dataset --pattern '**/*_protein.pdb' --dir data/pdbbind2020-refined-prepared --recursive
+    * python -m scripts.preprocess_dataset --pattern '*.pdb' --dir tests/data/dataset
+    * python -m scripts.preprocess_dataset --pattern '**/*_protein.pdb' --dir data/pdbbind2020-refined-prepared --recursive
 
 Use --help to see all options.
 """

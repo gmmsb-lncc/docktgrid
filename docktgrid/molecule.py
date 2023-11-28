@@ -4,7 +4,7 @@ import numpy as np
 import torch
 
 from docktgrid.config import DTYPE
-from docktgrid.molparser import MolecularData, Parser
+from docktgrid.molparser import MolecularData, MolecularParser, Parser
 from docktgrid.periodictable import ptable
 
 __all__ = ["MolecularComplex"]
@@ -17,9 +17,9 @@ class MolecularComplex:
 
     Attrs:
         protein_data:
-            A MolecularData object.
+            A `MolecularData` object.
         ligand_data:
-            A MolecularData object.
+            A `MolecularData` object.
         coords:
             A torch.Tensor of shape (3, n_atoms).
         n_atoms:
@@ -39,9 +39,21 @@ class MolecularComplex:
         self,
         protein_file: str | MolecularData,
         ligand_file: str | MolecularData,
-        molparser: Parser | None,
+        molparser: Parser | None = MolecularParser(),
         path="",
     ):
+        """Initialize MolecularComplex.
+
+        Args:
+            protein_file:
+                Path to the protein file or a MolecularData object.
+            ligand_file:
+                Path to the ligand file or a MolecularData object.
+            molparser:
+                A `MolecularParser` object.
+            path:
+                Path to the files.
+        """
         if isinstance(protein_file, MolecularData):
             self.protein_data = protein_file
         else:
@@ -55,14 +67,6 @@ class MolecularComplex:
             self.ligand_data: MolecularData = molparser.parse_file(
                 os.path.join(path, ligand_file), os.path.splitext(ligand_file)[1]
             )
-
-        # else:
-        #     self.protein_data: MolecularData = molparser.parse_file(
-        #         os.path.join(path, protein_file), os.path.splitext(protein_file)[1]
-        #     )
-        #     self.ligand_data: MolecularData = molparser.parse_file(
-        #         os.path.join(path, ligand_file), os.path.splitext(ligand_file)[1]
-        #     )
 
         self.ligand_center = torch.mean(self.ligand_data.coords, 1).to(dtype=DTYPE)
         self.coords = torch.cat((self.protein_data.coords, self.ligand_data.coords), 1)

@@ -1,3 +1,7 @@
+"""
+Periodic table of elements with relevant properties.
+"""
+
 ptable = {
     "H": {"name": "hydrogen", "num": 1, "mass": 1.00794, "vdw": 1.1},
     "He": {"name": "helium", "num": 2, "mass": 4.002602, "vdw": 1.4},

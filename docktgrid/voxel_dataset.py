@@ -16,7 +16,6 @@ class VoxelDataset(Dataset):
 
     Protein and ligand files must be in a list of strings or a list of MolecularData
     objects and must appear in the same order.
-
     """
 
     def __init__(

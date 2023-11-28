@@ -8,7 +8,20 @@ __all__ = ["VoxelGrid"]
 
 
 class VoxelGrid:
-    """Class to generate voxel representations of protein-ligand complexes."""
+    """Class to generate voxel representations of protein-ligand complexes.
+
+    Attributes:
+        grid:
+            A Grid3D object.
+        views:
+            List of Views.
+        num_channels:
+            Total number of channels for the chosen view configuration.
+        shape:
+            Voxel grid shape with channels first (n_channels, dim1, dim2, dim3).
+        occupancy_func:
+            Occupancy function to use.
+    """
 
     def __init__(
         self,
@@ -17,6 +30,15 @@ class VoxelGrid:
         box_dims: list[float],
         occupancy: str = "vdw",
     ):
+        """Initialize voxel grid.
+
+        Args:
+            views: List of views.
+            vox_size: Voxel size.
+            box_dims: Dimensions of the box containing the grid.
+            occupancy: Occupancy function to use.
+
+        """
         self.occupancy_func = self.get_occupancy_func(occupancy)
         self.grid = Grid3D(vox_size, box_dims)
         self.views = views
@@ -54,7 +76,7 @@ class VoxelGrid:
         channel.
 
         Args:
-            molecule (docktdeep.molecule.MolecularComplex)
+            molecule (docktgrid.molecule.MolecularComplex)
 
         Returns:
             A torch.Tensor with shape (n_channels, n_atoms) type bool
@@ -66,14 +88,15 @@ class VoxelGrid:
         """Voxelize protein-ligand complex and return voxel grid (features).
 
         Args:
-            molecule (docktdeep.molecule.MolecularComplex).
-            out (array-like or None):
-                Alternate output array in which to place the result.
-                The default is None; if provided, it must have shape corresponding to
-                (n_channels, nvoxels).
-            channels (array-like or None):
-                Must have shape (n_channels, n_atoms); if provided overrides channels
-                created from `view`.
+            molecule: docktgrid.molecule.MolecularComplex.
+
+            out (array-like or None): Alternate output array in which to place the result.
+            The default is None; if provided, it must have shape corresponding to
+            (n_channels, nvoxels).
+
+            channels (array-like or None): Must have shape (n_channels, n_atoms); if
+            provided overrides channels
+            created from `view`.
 
         Returns:
             A torch tensor of shape (n_channels, dim1, dim2, dim3). Each element

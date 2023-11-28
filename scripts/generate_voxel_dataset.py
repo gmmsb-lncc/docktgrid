@@ -5,9 +5,8 @@ This script assumes protein and ligand for each complex are in separate files an
 begin with the same unique identifier, e.g. 1abc_protein.pdb and 1abc_ligand_rnum.pdb.
 
 Usage examples:
+    python -m scripts.generate_voxel_dataset --help
     
-
-Use --help to see all options.
 """
 
 import argparse

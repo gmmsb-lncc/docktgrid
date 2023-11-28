@@ -1,4 +1,4 @@
-"""Script to export voxelized protein structures to PyMOL sessions using DockTDeep.
+"""Script to export voxelized protein structures to PyMOL sessions using docktgrid.
 
 This script requires the additional packages 'pymol' and 'gridDataFormats' to be installed.
 

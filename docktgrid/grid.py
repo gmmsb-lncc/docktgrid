@@ -6,9 +6,24 @@ __all__ = ["Grid3D"]
 
 
 class Grid3D:
-    """Generates a 3D grid of points centered at the origin."""
+    """Generates a 3D grid of points centered at the origin.
+
+    Attributes:
+        axes:
+            A tuple with the axes (x, y, z).
+        points:
+            A tuple with the coordinates of the grid points (x, y, z).
+        axes_dims:
+            A tuple with the size of the grid in each dimension (x, y, z).
+    """
 
     def __init__(self, vox_size: float, box_dims: list[float]):
+        """Initialize a 3D grid of points.
+
+        Args:
+            vox_size: Voxel size.
+            box_dims: Dimensions of the box containing the grid.
+        """
         self._vox_size = vox_size
         self._box_dims = torch.tensor(box_dims, dtype=DTYPE)
         self.axes = self._build_grid_axes()
