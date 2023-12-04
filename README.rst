@@ -1,3 +1,9 @@
+.. image:: https://img.shields.io/badge/license-LGPLv3-green
+  :target: https://www.gnu.org/licenses/lgpl-3.0.en.html
+
+.. image:: https://img.shields.io/badge/code%20style-black-black
+  :target: https://github.com/psf/black
+
 =========
 DockTGrid
 =========
@@ -85,7 +91,7 @@ There are also some examples in the `notebooks` folder.
 📄 License
 ==========
 
-This project is licensed under the (to-be-defined) License. See the `LICENSE.rst` file for details.
+This project is licensed under the `LGPL v3.0 <https://www.gnu.org/licenses/lgpl-3.0.en.html>`_ license.
 
 
 🖋️ Citing
