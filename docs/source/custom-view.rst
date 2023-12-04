@@ -20,8 +20,8 @@ Each column represents an atom in your complex. A spot in the grid tells you if 
 
 Also, note that the atoms follow the order they appear in the PDB file. The atoms from the protein are listed first, followed by those from the ligand.
 
-Pratical example
-~~~~~~~~~~~~~~~~
+Practical example
+~~~~~~~~~~~~~~~~~
 
 As an example, let us build a grid where each channel selectively includes protein atoms 
 based on their distance from the ligand's center. More specifically, channel :math:`i`  
@@ -96,8 +96,8 @@ So the total number of channels for this representation is 4 + 1 = 5.
             d = protein.distance(ligand_center)
             
             for i, (x, y) in enumerate(distances):
-                dst = ((d >= x) & (d < y)).to_numpy()
-                channels[i, :n_atoms_protein] = torch.tensor(dst, dtype=torch.bool)
+                channel = ((d >= x) & (d < y)).to_numpy()
+                channels[i, :n_atoms_protein] = torch.tensor(channel, dtype=torch.bool)
             
             return channels
 
