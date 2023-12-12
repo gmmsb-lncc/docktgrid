@@ -101,15 +101,12 @@ If you use DockTGrid in your research, please cite the following paper:
 
 .. code-block:: bibtex
 
-    @article{lorem,
-        title={},
-        author={},
-        journal={},
-        volume={},
-        number={},
-        pages={},
-        year={},
-        publisher={}
+    @article{silva2023deep,
+        title={Deep Learning-Ready Voxel Representation of Protein-Ligand Complexes from an Enhanced PBDbind v.2020 Dataset},
+        author={da Silva, Matheus M. P. and Guedes, Isabella A. and Lima, Fabio C. and Dardenne, Laurent E.},
+        journal={ChemRxiv},
+        year={2023},
+        publisher={Cambridge: Cambridge Open Engage}
     }
 
 
