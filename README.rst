@@ -83,7 +83,7 @@ Run the tests::
 🖥️ Usage
 ========
 
-See the `documentation <https://docktgrid.readthedocs.io/en/latest/>`_ for more information on how to use DockTGrid.
+See the `documentation <https://docktgrid.readthedocs.io/>`_ for more information on how to use DockTGrid.
 
 There are also some examples in the `notebooks` folder.
 
