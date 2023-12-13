@@ -32,15 +32,15 @@ Generate voxel representations of protein-ligand complexes for deep learning app
 🚀 Getting Started
 ==================
 
-.. Installation (pip)
-.. ------------------
-.. Install DockTGrid using `pip <https://pip.pypa.io/en/stable/>`_::
+Installation (pip)
+------------------
+Install DockTGrid using `pip <https://pip.pypa.io/en/stable/>`_::
 
-..     $ python -m pip install docktgrid
+    $ python -m pip install docktgrid
 
 
-.. Development
-.. -----------
+Development
+-----------
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 Python 3.11 is recommended, other versions may work but are not tested.
@@ -92,6 +92,14 @@ There are also some examples in the `notebooks` folder.
 ==========
 
 This project is licensed under the `LGPL v3.0 <https://www.gnu.org/licenses/lgpl-3.0.en.html>`_ license.
+
+
+📙 Database
+===========
+
+We provide a database of voxel representations of protein-ligand complexes generated using DockTGrid.
+The database is available for download at `Zenodo <https://zenodo.org/records/10202043>`_.
+For more information, see the associated publication.
 
 
 🖋️ Citing
