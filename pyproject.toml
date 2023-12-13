@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=69.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docktgrid"
+version = "0.0.1"
+description = "Create customized voxel representations of protein-ligand complexes using GPU."
+readme = "README.rst"
+authors = [{ name = "Matheus Müller Pereira da Silva", email = "matheusp@posgrad.lncc.br" }]
+license = {text = "LGPL-3.0-only"}
+classifiers = [
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Environment :: GPU",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+keywords = ["voxel-grid", "deep-learning", "molecular-docking", "virtual-screening"]
+dependencies = [
+    "torch>=2.1.0,<3.0.0",
+    "biopandas>=0.4.1, <1.0.0",
+    "scipy>=1.11.3, <2.0.0",
+    "numpy>=1.26.1, <2.0.0",
+]
+requires-python = ">=3.11"
+
+[tool.setuptools]
+packages = ["docktgrid"]
+
+[project.optional-dependencies]
+dev = ["black", "pytest"]
+
+[project.urls]
+Homepage = "https://github.com/gmmsb-lncc/docktgrid"
