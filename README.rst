@@ -94,11 +94,11 @@ There are also some examples in the `notebooks` folder.
 This project is licensed under the `LGPL v3.0 <https://www.gnu.org/licenses/lgpl-3.0.en.html>`_ license.
 
 
-📙 Database
+📙 Dataset
 ===========
 
-We provide a database of voxel representations of protein-ligand complexes generated using DockTGrid.
-The database is available for download at `Zenodo <https://zenodo.org/records/10202043>`_.
+We provide a dataset of voxel representations of protein-ligand complexes generated using DockTGrid.
+The dataset is available for download at `Zenodo <https://zenodo.org/records/10202043>`_.
 For more information, see the associated publication.
 
 
