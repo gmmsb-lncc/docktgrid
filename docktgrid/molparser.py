@@ -63,6 +63,12 @@ class MolecularParser:
             return MolecularData(
                 mol, self.get_coords_pdb(), self.get_element_symbols_pdb()
             )
+        elif ext.lower() in ("mol2", ".mol2"):  # MOL2 file format
+            mol = self.pmol2.read_mol2(mol_file)
+            self.df_atom = mol.df
+            return MolecularData(
+                mol, self.get_coords_mol2(), self.get_element_symbols_mol2()
+            )
         else:
             raise NotImplementedError(f"File format {ext} not implemented.")
 
@@ -76,6 +82,14 @@ class MolecularParser:
         hetatm_symbols = self.df_hetatm["element_symbol"].values
         atom_symbols = self.df_atom["element_symbol"].values
         symbols = np.concatenate((atom_symbols, hetatm_symbols), axis=0)
+        return symbols
+
+    def get_coords_mol2(self) -> torch.Tensor:
+        coords = self.df_atom[["x", "y", "z"]].values.T
+        return torch.tensor(coords, dtype=DTYPE)
+
+    def get_element_symbols_mol2(self) -> list[str]:
+        symbols = self.df_atom["atom_name"].values
         return symbols
 
 
