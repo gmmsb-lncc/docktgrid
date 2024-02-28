@@ -3,6 +3,7 @@
 This script requires the additional packages 'pymol' and 'gridDataFormats' to be installed.
 
 """
+
 try:
     import pymol
 except (ImportError, ModuleNotFoundError):
@@ -24,6 +25,7 @@ except (ImportError, ModuleNotFoundError):
 import argparse
 import logging
 import os
+import pickle
 import time
 
 import gridData as gdd
@@ -39,8 +41,16 @@ from docktgrid.view import *
 
 def export_voxels(args: argparse.Namespace) -> str:
     c = MolecularComplex(
-        args.protein_file,
-        args.ligand_file,
+        protein_file=(
+            args.protein_file
+            if not os.path.splitext(args.protein_file)[1] == ".pkl"
+            else pickle.load(open(os.path.join(args.dir, args.protein_file), "rb"))
+        ),
+        ligand_file=(
+            args.ligand_file
+            if not os.path.splitext(args.ligand_file)[1] == ".pkl"
+            else pickle.load(open(os.path.join(args.dir, args.ligand_file), "rb"))
+        ),
         molparser=docktgrid.MolecularParser(),
         path=args.dir,
     )
