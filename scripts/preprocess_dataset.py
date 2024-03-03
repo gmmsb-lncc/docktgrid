@@ -21,10 +21,10 @@ from docktgrid.molparser import MolecularParser
 
 
 def main(args):
-    files = get_files(args.pattern, args.dir, args.recursive)
+    files = get_files(args.pattern, args.dir, args.recursive, args.files)
     if not files:
         raise FileNotFoundError(
-            "No files found with pattern: {} in directory: {}".format(
+            "No files found with pattern: {} or within provided txt file in directory: {}".format(
                 args.pattern, args.dir
             )
         )
@@ -62,7 +62,13 @@ def join_files(files: list[str], output_file: str) -> None:
                     outfile.write(line)
 
 
-def get_files(pattern: str, root_dir: str, recursive: bool = False) -> list[str]:
+def get_files(
+    pattern: str, root_dir: str, recursive: bool = False, files_descr=None
+) -> list[str]:
+    if files_descr:
+        with open(files_descr, "r") as f:
+            return [os.path.join(root_dir, line.strip()) for line in f.readlines()]
+
     return glob.glob(os.path.join(root_dir, pattern), recursive=recursive)
 
 
@@ -70,9 +76,10 @@ if __name__ == "__main__":
     # fmt: off
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-p", "--pattern", default="*.pdb", help="glob pattern for finding files")
-    parser.add_argument("-d", "--dir", default="data", help="root directory for data files")
+    parser.add_argument("-d", "--dir", default="", help="root directory for data files")
     parser.add_argument("-o", "--output", default="data/processed", help="output directory")
     parser.add_argument("-r", "--recursive", action="store_true", help="recursively search for files")
+    parser.add_argument("-f", "--files", default=None, help="a txt file containing the list of files to process, one per line. if provided, --pattern is ignored.")
     # fmt: on
     args = parser.parse_args()
     main(args)
