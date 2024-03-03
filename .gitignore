@@ -15,6 +15,7 @@ tags
 lightning_logs
 data/processed
 data/pdbbind2020-refined-prepared*
+data/pdbbind2020-general*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
