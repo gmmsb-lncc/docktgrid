@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "docktgrid"
-version = "0.0.1"
+version = "0.0.2"
 description = "Create customized voxel representations of protein-ligand complexes using GPU."
 readme = "README.rst"
 authors = [{ name = "Matheus Müller Pereira da Silva", email = "matheusp@posgrad.lncc.br" }]
