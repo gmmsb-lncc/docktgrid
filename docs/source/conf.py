@@ -9,7 +9,7 @@
 project = "DockTGrid"
 copyright = "2023, Matheus M. P. da Silva"
 author = "Matheus M. P. da Silva"
-release = "0.0.1"
+release = "0.0.2"
 
 import os
 import sys
