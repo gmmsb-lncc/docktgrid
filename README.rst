@@ -24,8 +24,7 @@ Generate voxel representations of protein-ligand complexes for deep learning app
 * Support for multiple file formats (to be expanded).
 
   * ✅ PDB
-  * ❌ MOL2
-  * ❌ SDF
+  * ✅ MOL2
 
 
 
