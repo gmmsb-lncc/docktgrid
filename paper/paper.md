@@ -98,9 +98,9 @@ Notable examples include [`libmolgrid`](https://github.com/gnina/libmolgrid) [@s
 [`moleculekit`](https://github.com/Acellera/moleculekit) [@doerr2016htmd], 
 and [`deepchem`](https://github.com/deepchem/deepchem) [@ramsundar2019deep]. However, 
 users may encounter challenges with these packages in feature customization or programming language diversity. 
-In some of these, not all functionalities are developed in Python; incorporating programming languages like C++, 
+In some of these, such as `libmolgrid`,  not all functionalities are developed in Python; incorporating programming languages like C++, 
 which could limit accessibility for users primarily familiar with Python in the 
-DL community.
+DL community. Moreover, as of today, `deepchem` and `moleculekit` libraries do not provide GPU-accelerated voxel grid generation.
 
 
 `DockTGrid` was developed entirely in Python 3 and is built atop the widely-used DL 
