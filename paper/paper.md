@@ -24,7 +24,7 @@ authors:
     affiliation: 1
 
   - name: Laurent Emmanuel Dardenne
-    orcid: 000-0001-8518-8062
+    orcid: 0000-0001-8518-8062
     corresponding: true
     affiliation: 1
 
