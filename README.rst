@@ -100,15 +100,15 @@ This project is licensed under the `LGPL v3.0 <https://www.gnu.org/licenses/lgpl
 
 If you use DockTGrid in your research, please cite:
 
-- *Müller Pereira da Silva, M., Alvim Guedes, I., Lima Custódio, F., & Emmanuel Dardenne, L. (2024). DockTGrid (0.0.2). Zenodo. https://zenodo.org/doi/10.5281/zenodo.10304711*
+- *da Silva, M. M. P., Guedes, I. A., Custódio, F. L., & Dardenne, L. E. (2024). DockTGrid (0.0.2). Zenodo. https://zenodo.org/doi/10.5281/zenodo.10304711*
 
 .. code-block:: bibtex
 
     @software{mpds2024docktgrid,
-        author       = {Müller Pereira da Silva, Matheus and
-                        Alvim Guedes, Isabella and
-                        Lima Custódio, Fábio and
-                        Emmanuel Dardenne, Laurent},
+        author       = {da Silva, Matheus Müller Pereira and
+                  Guedes, Isabella Alvim and
+                  Custódio, Fábio Lima and
+                  Dardenne, Laurent Emmanuel},
         title        = {DockTGrid},
         month        = mar,
         year         = 2024,
