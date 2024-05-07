@@ -1,8 +1,10 @@
-.. image:: https://img.shields.io/badge/license-LGPLv3-green
-  :target: https://www.gnu.org/licenses/lgpl-3.0.en.html
+.. raw:: html
 
-.. image:: https://img.shields.io/badge/code%20style-black-black
-  :target: https://github.com/psf/black
+    <p>
+    <a href="https://www.gnu.org/licenses/lgpl-3.0.en.html"><img src="https://img.shields.io/badge/license-LGPLv3-green"></a>
+    <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-black"></a>
+    </p>
+
 
 =========
 DockTGrid
@@ -93,17 +95,26 @@ There are also some examples in the `notebooks` folder.
 This project is licensed under the `LGPL v3.0 <https://www.gnu.org/licenses/lgpl-3.0.en.html>`_ license.
 
 
-.. We have used DockTGrid in the following publications:
+📝 Citation
+===========
 
-.. .. code-block:: bibtex
+If you use DockTGrid in your research, please cite:
 
-..     @article{,
-..     title={},
-..     author={},
-..     journal={},
-..     volume={},
-..     number={},
-..     pages={},
-..     year={},
-..     publisher={}
-..     }
+- *Müller Pereira da Silva, M., Alvim Guedes, I., Lima Custódio, F., & Emmanuel Dardenne, L. (2024). DockTGrid (0.0.2). Zenodo. https://zenodo.org/doi/10.5281/zenodo.10304711*
+
+.. code-block:: bibtex
+
+    @software{mpds2024docktgrid,
+        author       = {Müller Pereira da Silva, Matheus and
+                        Alvim Guedes, Isabella and
+                        Lima Custódio, Fábio and
+                        Emmanuel Dardenne, Laurent},
+        title        = {DockTGrid},
+        month        = mar,
+        year         = 2024,
+        publisher    = {Zenodo},
+        version      = {0.0.2},
+        doi          = {10.5281/zenodo.10304711},
+        url          = {https://zenodo.org/doi/10.5281/zenodo.10304711}
+        }
+
