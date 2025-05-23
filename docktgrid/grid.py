@@ -1,3 +1,5 @@
+from typing import List
+
 import torch
 
 from .config import DTYPE
@@ -17,7 +19,7 @@ class Grid3D:
             A tuple with the size of the grid in each dimension (x, y, z).
     """
 
-    def __init__(self, vox_size: float, box_dims: list[float]):
+    def __init__(self, vox_size: float, box_dims: List[float]):
         """Initialize a 3D grid of points.
 
         Args:
@@ -64,4 +66,5 @@ class Grid3D:
             z.repeat(x.shape[0] * y.shape[0]),
         )
 
+        return points
         return points

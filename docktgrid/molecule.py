@@ -1,4 +1,5 @@
 import os
+from typing import Optional, Union
 
 import numpy as np
 import torch
@@ -37,9 +38,9 @@ class MolecularComplex:
 
     def __init__(
         self,
-        protein_file: str | MolecularData,
-        ligand_file: str | MolecularData,
-        molparser: Parser | None = MolecularParser(),
+        protein_file: Union[str, MolecularData],
+        ligand_file: Union[str, MolecularData],
+        molparser: Optional[Parser] = MolecularParser(),
         path="",
     ):
         """Initialize MolecularComplex.

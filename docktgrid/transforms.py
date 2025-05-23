@@ -1,4 +1,4 @@
-from typing import Protocol
+from typing import Optional, Protocol, Tuple, Union
 
 import torch
 from scipy.spatial.transform import Rotation
@@ -11,8 +11,7 @@ __all__ = ["RandomRotation", "Transform"]
 class Transform(Protocol):
     """Interface for implementing transformations."""
 
-    def __call__(self, *args, **kwargs):
-        ...
+    def __call__(self, *args, **kwargs): ...
 
 
 class RandomRotation:
@@ -26,7 +25,7 @@ class RandomRotation:
 
     def __call__(
         self, coords: torch.Tensor, ligand_center: torch.Tensor
-    ) -> tuple[torch.Tensor] | None:
+    ) -> Optional[Tuple[torch.Tensor]]:
         matrix = self._get_rn_matrix()
 
         rotated_coords = torch.matmul(matrix, coords)

@@ -1,3 +1,5 @@
+from typing import List
+
 import torch
 
 from docktgrid.config import DEVICE, DTYPE
@@ -25,9 +27,9 @@ class VoxelGrid:
 
     def __init__(
         self,
-        views: list[View],
+        views: List[View],
         vox_size: float,
-        box_dims: list[float],
+        box_dims: List[float],
         occupancy: str = "vdw",
     ):
         """Initialize voxel grid.
@@ -194,4 +196,5 @@ class VoxelGrid:
 
     #     occs = 1 - torch.exp(-1 * torch.pow(vdws / dist, 12)).unsqueeze(0)
     #     mask = channels.view(channels.shape[0], 1, channels.shape[1])
+    #     out[:, :], _ = torch.max(torch.where(mask, occs, 0), dim=2)
     #     out[:, :], _ = torch.max(torch.where(mask, occs, 0), dim=2)
