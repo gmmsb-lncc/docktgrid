@@ -1,20 +1,23 @@
-.. raw:: html
+.. image:: https://img.shields.io/badge/license-LGPLv3-green
+    :target: https://www.gnu.org/licenses/lgpl-3.0.en.html
+    :alt: License
 
-    <p>
-    <a href="https://www.gnu.org/licenses/lgpl-3.0.en.html"><img src="https://img.shields.io/badge/license-LGPLv3-green"></a>
-    <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-black"></a>
-    </p>
-
+.. image:: https://img.shields.io/badge/code%20style-black-black
+    :target: https://github.com/psf/black
+    :alt: Code style
 
 =========
 DockTGrid
 =========
+
+
 
 Generate voxel representations of protein-ligand complexes for deep learning applications.
 
 .. image:: https://i.imgur.com/VVkQg4t.png
     :align: center
     :width: 50%
+
 
     
 📌 Features
@@ -100,7 +103,7 @@ This project is licensed under the `LGPL v3.0 <https://www.gnu.org/licenses/lgpl
 
 If you use DockTGrid in your research, please cite:
 
-- *da Silva, M. M. P., Guedes, I. A., Custódio, F. L., & Dardenne, L. E. (2024). DockTGrid (0.0.2). Zenodo. https://zenodo.org/doi/10.5281/zenodo.10304711*
+- *da Silva, M. M. P., Guedes, I. A., Custódio, F. L., & Dardenne, L. E. (2024). DockTGrid (0.0.3). Zenodo.* `https://zenodo.org/doi/10.5281/zenodo.10304711`
 
 .. code-block:: bibtex
 
@@ -111,7 +114,7 @@ If you use DockTGrid in your research, please cite:
                   Dardenne, Laurent Emmanuel},
         title        = {DockTGrid},
         month        = mar,
-        year         = 2025,
+        year         = 2024,
         publisher    = {Zenodo},
         version      = {0.0.3},
         doi          = {10.5281/zenodo.10304711},
