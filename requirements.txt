@@ -3,7 +3,6 @@ biopandas==0.5.1
 black==25.1.0
 click==8.2.1
 decorator==5.2.1
-docktgrid==0.0.2
 executing==2.2.0
 filelock==3.18.0
 fsspec==2025.5.0
