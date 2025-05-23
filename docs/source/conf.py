@@ -7,9 +7,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "DockTGrid"
-copyright = "2023, Matheus M. P. da Silva"
+copyright = "2025, Matheus M. P. da Silva"
 author = "Matheus M. P. da Silva"
-release = "0.0.2"
+release = "0.0.3"
 
 import os
 import sys

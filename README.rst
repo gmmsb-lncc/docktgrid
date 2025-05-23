@@ -111,9 +111,9 @@ If you use DockTGrid in your research, please cite:
                   Dardenne, Laurent Emmanuel},
         title        = {DockTGrid},
         month        = mar,
-        year         = 2024,
+        year         = 2025,
         publisher    = {Zenodo},
-        version      = {0.0.2},
+        version      = {0.0.3},
         doi          = {10.5281/zenodo.10304711},
         url          = {https://zenodo.org/doi/10.5281/zenodo.10304711}
         }
