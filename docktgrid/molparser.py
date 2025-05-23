@@ -1,6 +1,5 @@
-import pickle
 from dataclasses import dataclass
-from typing import Protocol
+from typing import List, Protocol, Union
 
 import numpy as np
 import torch
@@ -24,7 +23,7 @@ class MolecularData:
             np.ndarray of shape (n_atoms,), type str.
     """
 
-    molecule_object: mol2.PandasMol2 | pdb.PandasPdb | mmcif.PandasMmcif
+    molecule_object: Union[mol2.PandasMol2, pdb.PandasPdb, mmcif.PandasMmcif]
     coords: torch.Tensor
     element_symbols: np.ndarray
 
@@ -78,7 +77,7 @@ class MolecularParser:
         coords = np.concatenate((atom_coords, hetatm_coords), axis=0).T
         return torch.tensor(coords, dtype=DTYPE)
 
-    def get_element_symbols_pdb(self) -> list[str]:
+    def get_element_symbols_pdb(self) -> List[str]:
         hetatm_symbols = self.df_hetatm["element_symbol"].values
         atom_symbols = self.df_atom["element_symbol"].values
         symbols = np.concatenate((atom_symbols, hetatm_symbols), axis=0)
@@ -88,7 +87,7 @@ class MolecularParser:
         coords = self.df_atom[["x", "y", "z"]].values.T
         return torch.tensor(coords, dtype=DTYPE)
 
-    def get_element_symbols_mol2(self) -> list[str]:
+    def get_element_symbols_mol2(self) -> List[str]:
         symbols = self.df_atom["atom_name"].values
         return symbols
 

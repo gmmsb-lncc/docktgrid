@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "docktgrid"
-version = "0.0.2"
+version = "0.0.3"
 description = "Create customized voxel representations of protein-ligand complexes using GPU."
 readme = "README.rst"
 authors = [{ name = "Matheus Müller Pereira da Silva", email = "matheusp@posgrad.lncc.br" }]
@@ -21,12 +21,12 @@ classifiers = [
 ]
 keywords = ["voxel-grid", "deep-learning", "molecular-docking", "virtual-screening"]
 dependencies = [
-    "torch>=2.1.0,<3.0.0",
+    "torch<3.0.0",
     "biopandas>=0.4.1, <1.0.0",
-    "scipy>=1.11.3, <2.0.0",
-    "numpy>=1.26.1, <2.0.0",
+    "scipy<3.0.0",
+    "numpy<3.0.0",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.8"
 
 [tool.setuptools]
 packages = ["docktgrid"]

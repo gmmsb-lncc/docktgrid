@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional, Union
 
 import torch
 from torch.utils.data import Dataset
@@ -20,12 +20,12 @@ class VoxelDataset(Dataset):
 
     def __init__(
         self,
-        protein_files: list[str] | list[MolecularData],
-        ligand_files: list[str] | list[MolecularData],
-        labels: list[float],
+        protein_files: List[Union[str, MolecularData]],
+        ligand_files: List[Union[str, MolecularData]],
+        labels: List[float],
         voxel: VoxelGrid,
         molparser: MolecularParser = MolecularParser(),
-        transform: Optional[list[Transform]] = None,
+        transform: Optional[List[Transform]] = None,
         root_dir: str = "",
     ):
         assert len(protein_files) == len(ligand_files), "must have the same length!"
