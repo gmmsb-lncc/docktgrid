@@ -103,21 +103,20 @@ This project is licensed under the `LGPL v3.0 <https://www.gnu.org/licenses/lgpl
 
 If you use DockTGrid in your research, please cite:
 
-- *da Silva, M. M. P., Guedes, I. A., Custódio, F. L., & Dardenne, L. E. (2024). DockTGrid (0.0.3). Zenodo.* `https://zenodo.org/doi/10.5281/zenodo.10304711`
+- *da Silva, M. M. P., Guedes, I. A., Custódio, F. L., & Dardenne, L. E. (2025). DockTGrid: A Python Package for Generating Deep Learning-Ready Voxel Grids of Molecular Complexes.* `https://doi.org/10.13140/RG.2.2.13438.50246`
 
 .. code-block:: bibtex
 
-    @software{mpds2024docktgrid,
+    @article{docktgrid2025,
         author       = {da Silva, Matheus Müller Pereira and
                   Guedes, Isabella Alvim and
                   Custódio, Fábio Lima and
                   Dardenne, Laurent Emmanuel},
-        title        = {DockTGrid},
-        month        = mar,
-        year         = 2024,
-        publisher    = {Zenodo},
-        version      = {0.0.3},
-        doi          = {10.5281/zenodo.10304711},
-        url          = {https://zenodo.org/doi/10.5281/zenodo.10304711}
-        }
+        title        = {DockTGrid: A Python Package for Generating Deep Learning-Ready Voxel Grids of Molecular Complexes},
+        year         = 2025,
+        doi          = {10.13140/RG.2.2.13438.50246},
+        url          = {https://rgdoi.net/10.13140/RG.2.2.13438.50246},
+        publisher    = {ResearchGate}
+    }
+
 
