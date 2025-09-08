@@ -6,7 +6,39 @@ from docktgrid.config import DEVICE, DTYPE
 from docktgrid.grid import Grid3D
 from docktgrid.view import View
 
+torch.set_float32_matmul_precision("high")
+
 __all__ = ["VoxelGrid"]
+
+
+def _calc_vdw_occupancies_fn(
+    P3: torch.Tensor,  # (P, 3) grid points (shifted by center), DTYPE on DEVICE
+    A3: torch.Tensor,  # (A, 3) atom coords, DTYPE on DEVICE
+    vdws12: torch.Tensor,  # (A,) vdw radii^12, DTYPE on DEVICE
+    chs: torch.Tensor,  # (C, A) bool on DEVICE
+) -> torch.Tensor:  # returns (C, P)
+    # compute squared distances via norm identities and a single GEMM
+    p2 = (P3 * P3).sum(dim=1, keepdim=True)  # (P,1)
+    a2 = (A3 * A3).sum(dim=1, keepdim=False).unsqueeze(0)  # (1,A)
+    dot = P3 @ A3.transpose(0, 1)  # (P,A)
+    dist2 = (p2 + a2 - 2.0 * dot).clamp_min(1e-12)  # (P,A)
+
+    inv_d2 = dist2.reciprocal()
+    inv_d4 = inv_d2 * inv_d2
+    inv_d8 = inv_d4 * inv_d4
+    inv_d12 = inv_d8 * inv_d4  # (P,A)
+
+    occs = 1 - torch.exp(-(vdws12 * inv_d12))  # (P,A)
+
+    masked = occs.unsqueeze(0).masked_fill(~chs[:, None, :], float("-inf"))  # (C,P,A)
+    out = masked.amax(dim=-1)  # (C,P)
+    out = torch.where(torch.isfinite(out), out, torch.zeros_like(out))
+    return out
+
+
+_compiled_calc = torch.compile(
+    _calc_vdw_occupancies_fn, dynamic=True, mode="max-autotune"
+)
 
 
 class VoxelGrid:
@@ -41,9 +73,16 @@ class VoxelGrid:
             occupancy: Occupancy function to use.
 
         """
-        self.occupancy_func = self.get_occupancy_func(occupancy)
+        if occupancy != "vdw":
+            raise NotImplementedError(
+                f"Occupancy function for {occupancy} is not implemented yet."
+            )
         self.grid = Grid3D(vox_size, box_dims)
         self.views = views
+
+        # cache grid points on device for fast matmuls
+        px, py, pz = self.grid.points
+        self._P3_base = torch.stack((px, py, pz), dim=1).to(device=DEVICE, dtype=DTYPE)
 
     @property
     def num_channels(self):
@@ -59,17 +98,7 @@ class VoxelGrid:
         """
         n_channels = self.num_channels
         dim1, dim2, dim3 = self.grid.axes_dims
-
         return (n_channels, dim1, dim2, dim3)
-
-    def get_occupancy_func(self, occ):
-        """Get occupancy function."""
-        if occ == "vdw":
-            return self._voxelize_vdw
-        else:
-            raise NotImplementedError(
-                " ".join((f"Occupancy function for {occ} is not implemented yet."))
-            )
 
     def get_channels_mask(self, molecule):
         """Build channels mask.
@@ -114,12 +143,14 @@ class VoxelGrid:
                 raise ValueError(
                     " ".join(
                         (
-                            "`out` shape must be == {},".format(self.shape),
-                            "currently it is {}".format(out.shape),
+                            f"`out` shape must be == {self.shape},",
+                            f"currently it is {out.shape}",
                         )
                     )
                 )
-            out = torch.as_tensor(out, DTYPE, DEVICE, requires_grad=requires_grad)
+            out = torch.as_tensor(
+                out, dtype=DTYPE, device=DEVICE, requires_grad=requires_grad
+            )
 
         if channels is None:
             channels = self.get_channels_mask(molecule)
@@ -129,72 +160,33 @@ class VoxelGrid:
                 raise ValueError(
                     " ".join(
                         (
-                            "`channels` shape must be == {},".format(cshape),
-                            "currently it is {}".format(channels.shape),
+                            f"`channels` shape must be == {cshape},",
+                            f"currently it is {channels.shape}",
                         )
                     )
                 )
-            channels = torch.as_tensor(channels, dtype=DTYPE, device=DEVICE)
+        channels = torch.as_tensor(
+            channels, dtype=torch.bool, device=DEVICE
+        ).contiguous()
 
-        # create voxel based in occupancy option
-        self.occupancy_func(molecule, out, channels)
-
+        self._voxelize_vdw(molecule, out, channels)
         return out.view(self.shape)
 
     @torch.no_grad()
     def _voxelize_vdw(self, molecule, out, channels) -> None:
-        points = self.grid.points
-        center = molecule.ligand_center
-        # translate grid points and reshape for proper broadcasting
-        grid = [(u + v).unsqueeze(-1) for u, v in zip(points, center)]
+        # shift cached grid points by ligand center
+        center = molecule.ligand_center.to(device=DEVICE, dtype=DTYPE)  # (3,)
+        P3 = self._P3_base + center  # (P,3)
 
-        x, y, z = 0, 1, 2
-        # reshape to n_channls, n_points
-        out = out.view(channels.shape[0], grid[x].shape[0])
+        # build atoms matrix (A,3) and vdW^12 vector
+        ax, ay, az = molecule.coords
+        A3 = torch.stack((ax, ay, az), dim=1).to(device=DEVICE, dtype=DTYPE)  # (A,3)
+        vdws12 = molecule.vdw_radii.to(device=DEVICE, dtype=DTYPE).pow(12)  # (A,)
 
-        self._calc_vdw_occupancies(
-            out,
-            channels,
-            molecule.coords[x].to(DEVICE),
-            molecule.coords[y].to(DEVICE),
-            molecule.coords[z].to(DEVICE),
-            grid[x].to(DEVICE),
-            grid[y].to(DEVICE),
-            grid[z].to(DEVICE),
-            molecule.vdw_radii.to(DEVICE),
-        )
+        # print("THIS IS THE OPTIMIZED VERSION" * 10)
+        out_ = _compiled_calc(P3, A3, vdws12, channels)
 
-    @staticmethod
-    @torch.jit.script
-    def _calc_vdw_occupancies(
-        out: torch.Tensor,  # output tensor, shape (n_channels, n_points)
-        channels: torch.Tensor,  # bool mask of channels, shape (n_channels, n_atoms)
-        ax: torch.Tensor,  # x coords of atoms, shape (n_atoms,)
-        ay: torch.Tensor,  # y coords of atoms, shape (n_atoms,)
-        az: torch.Tensor,  # z coords of atoms, shape (n_atoms,)
-        px: torch.Tensor,  # x coords of grid points, shape (n_points, 1)
-        py: torch.Tensor,  # y coords of grid points, shape (n_points, 1)
-        pz: torch.Tensor,  # z coords of grid points, shape (n_points, 1)
-        vdws: torch.Tensor,  # vdw radii of atoms, shape (n_atoms,)
-    ):
-        dist = torch.sqrt(
-            torch.pow(ax - px, 2) + torch.pow(ay - py, 2) + torch.pow(az - pz, 2)
-        )
-        occs = 1 - torch.exp(-1 * torch.pow(vdws / dist, 12))  # voxel occupancies
-
-        for i, mask in enumerate(channels):
-            if torch.any(mask):
-                torch.amax(occs[:, mask], dim=1, out=out[i])
-
-    # a version without the for loop (it seems to be slower and uses more memory?)
-    # @staticmethod
-    # @torch.jit.script
-    # def _calc_vdw_occupancies(out, channels, ax, ay, az, px, py, pz, vdws):
-    #     dist = torch.sqrt(
-    #         torch.pow((ax - px), 2) + torch.pow((ay - py), 2) + torch.pow((az - pz), 2)
-    #     )
-
-    #     occs = 1 - torch.exp(-1 * torch.pow(vdws / dist, 12)).unsqueeze(0)
-    #     mask = channels.view(channels.shape[0], 1, channels.shape[1])
-    #     out[:, :], _ = torch.max(torch.where(mask, occs, 0), dim=2)
-    #     out[:, :], _ = torch.max(torch.where(mask, occs, 0), dim=2)
+        # copy back into provided buffer with shape (C, P)
+        C = channels.shape[0]
+        P = P3.shape[0]
+        out.view(C, P).copy_(out_)
